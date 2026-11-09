@@ -1,1 +1,238 @@
-styles
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zambia Take-Home Pay</title>
+    <meta
+      name="description"
+      content="Work out your Zambian take-home pay: PAYE band by band, NAPSA, NHIMA, the salary you need, and which job offer pays more."
+    />
+    <meta name="theme-color" content="#14532d" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="masthead">
+        <div class="language">
+          <label for="language" data-label="language">Language</label>
+          <select id="language"></select>
+        </div>
+        <h1 data-label="title">Zambia take-home pay</h1>
+        <p>PAYE, NAPSA and NHIMA on your salary, using <span id="rates-year">current</span> rates.</p>
+        <p id="draft-note" class="draft-note" hidden>
+          Draft translation, not yet checked by a fluent speaker. Tax explanations stay in English.
+        </p>
+      </header>
+
+      <fieldset class="period modes">
+        <legend class="visually-hidden">Calculator</legend>
+        <label><input type="radio" name="mode" value="pay" checked /><span data-label="modePay">Take-home</span></label>
+        <label><input type="radio" name="mode" value="reverse" /><span data-label="modeReverse">Salary needed</span></label>
+        <label><input type="radio" name="mode" value="compare" /><span data-label="modeCompare">Compare offers</span></label>
+      </fieldset>
+
+      <div id="view-pay">
+        <form class="inputs" novalidate autocomplete="off">
+          <div class="field">
+            <label for="basic"><span data-label="basic">Basic salary</span> <span class="hint" data-label="perMonth">per month</span></label>
+            <div class="money-input">
+              <span aria-hidden="true">K</span>
+              <input id="basic" inputmode="decimal" placeholder="0.00" aria-describedby="basic-error" />
+            </div>
+            <p id="basic-error" class="error" role="alert" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="allowances"><span data-label="allowances">Allowances</span> <span class="hint" data-label="perMonth">per month</span></label>
+            <div class="money-input">
+              <span aria-hidden="true">K</span>
+              <input id="allowances" inputmode="decimal" placeholder="0.00" aria-describedby="allowances-error" />
+            </div>
+            <p id="allowances-error" class="error" role="alert" hidden></p>
+          </div>
+        </form>
+
+        <section id="result" class="result" aria-labelledby="net-label">
+          <fieldset class="period">
+            <legend class="visually-hidden">Show amounts</legend>
+            <label><input type="radio" name="period" value="monthly" checked /><span data-label="monthly">Monthly</span></label>
+            <label><input type="radio" name="period" value="annual" /><span data-label="annual">Annual</span></label>
+          </fieldset>
+
+          <p id="net-label" class="net-label" data-label="youTakeHome">You take home</p>
+          <p id="net" class="net" aria-live="polite">K0.00</p>
+
+          <div id="bar" class="bar" aria-hidden="true">
+            <span class="seg seg-net"></span>
+            <span class="seg seg-paye"></span>
+            <span class="seg seg-napsa"></span>
+            <span class="seg seg-nhima"></span>
+          </div>
+
+          <dl class="rows">
+            <div class="row"><dt data-label="grossPay">Gross pay</dt><dd id="gross">K0.00</dd></div>
+            <div class="row"><dt><i class="dot seg-paye"></i>PAYE</dt><dd id="paye">K0.00</dd></div>
+            <div class="row"><dt><i class="dot seg-napsa"></i>NAPSA</dt><dd id="napsa">K0.00</dd></div>
+            <div class="row"><dt><i class="dot seg-nhima"></i>NHIMA</dt><dd id="nhima">K0.00</dd></div>
+            <div class="row total"><dt><i class="dot seg-net"></i><span data-label="takeHome">Take-home</span></dt><dd id="net-row">K0.00</dd></div>
+          </dl>
+
+          <details class="panel">
+            <summary>How your PAYE is worked out</summary>
+            <div class="scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Band</th>
+                    <th scope="col" data-label="rate">Rate</th>
+                    <th scope="col">In band</th>
+                    <th scope="col" data-label="tax">Tax</th>
+                  </tr>
+                </thead>
+                <tbody id="bands"></tbody>
+              </table>
+            </div>
+          </details>
+
+          <label class="toggle"><input id="show-employer" type="checkbox" /> <span data-label="showEmployer">Show what this costs the employer</span></label>
+
+          <div id="employer" class="panel employer" hidden>
+            <dl class="rows">
+              <div class="row"><dt data-label="grossPay">Gross pay</dt><dd id="er-gross">K0.00</dd></div>
+              <div class="row"><dt>NAPSA</dt><dd id="er-napsa">K0.00</dd></div>
+              <div class="row"><dt>NHIMA</dt><dd id="er-nhima">K0.00</dd></div>
+              <div class="row"><dt>Skills Development Levy</dt><dd id="er-sdl">K0.00</dd></div>
+              <div class="row total"><dt data-label="totalCost">Total cost</dt><dd id="er-total">K0.00</dd></div>
+            </dl>
+          </div>
+
+          <div class="share">
+            <button id="print" type="button" data-label="print">Print or save as PDF</button>
+          </div>
+        </section>
+      </div>
+
+      <div id="view-reverse" hidden>
+        <form class="inputs" novalidate autocomplete="off">
+          <div class="field">
+            <label for="target"><span data-label="targetNet">Take-home you want</span> <span class="hint" data-label="perMonth">per month</span></label>
+            <div class="money-input">
+              <span aria-hidden="true">K</span>
+              <input id="target" inputmode="decimal" placeholder="0.00" aria-describedby="target-error" />
+            </div>
+            <p id="target-error" class="error" role="alert" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="target-allowances"><span data-label="allowances">Allowances</span> <span class="hint" data-label="perMonth">per month</span></label>
+            <div class="money-input">
+              <span aria-hidden="true">K</span>
+              <input id="target-allowances" inputmode="decimal" placeholder="0.00" aria-describedby="target-allowances-error" />
+            </div>
+            <p id="target-allowances-error" class="error" role="alert" hidden></p>
+          </div>
+        </form>
+
+        <section id="reverse-result" class="result" aria-labelledby="reverse-label">
+          <p id="reverse-label" class="net-label" data-label="grossNeeded">Gross salary needed</p>
+          <p id="reverse-gross" class="net" aria-live="polite">K0.00</p>
+          <p id="reverse-message" class="message" role="status"></p>
+
+          <dl class="rows">
+            <div class="row"><dt data-label="basicNeeded">Basic salary needed</dt><dd id="reverse-basic">K0.00</dd></div>
+            <div class="row"><dt data-label="allowances">Allowances</dt><dd id="reverse-allowances">K0.00</dd></div>
+            <div class="row"><dt>PAYE</dt><dd id="reverse-paye">K0.00</dd></div>
+            <div class="row"><dt>NAPSA</dt><dd id="reverse-napsa">K0.00</dd></div>
+            <div class="row"><dt>NHIMA</dt><dd id="reverse-nhima">K0.00</dd></div>
+            <div class="row total"><dt data-label="takeHome">Take-home</dt><dd id="reverse-net">K0.00</dd></div>
+          </dl>
+          <p class="fine-print">Your allowances stay as entered and the rest is treated as basic salary. A different split changes NHIMA slightly.</p>
+        </section>
+      </div>
+
+      <div id="view-compare" hidden>
+        <form id="offers" class="offers" novalidate autocomplete="off"></form>
+
+        <section id="compare-result" class="result" aria-live="polite">
+          <p id="compare-hint" class="message"></p>
+          <div id="compare-output" hidden>
+            <p id="compare-headline" class="headline"></p>
+            <div class="scroll">
+              <table>
+                <thead id="compare-head"></thead>
+                <tbody id="compare-body"></tbody>
+              </table>
+            </div>
+            <p class="fine-print">Amounts are per month. The offer with the highest take-home is highlighted.</p>
+          </div>
+        </section>
+      </div>
+
+      <div class="share page-share">
+        <button id="copy-link" type="button" data-label="copyLink">Copy link</button>
+        <span id="copy-status" role="status"></span>
+      </div>
+
+      <section class="slip" aria-hidden="true">
+        <h2>Pay summary</h2>
+        <p class="slip-meta"><span id="slip-period"></span> &middot; <span id="slip-year"></span> rates &middot; Generated <span id="slip-date"></span></p>
+        <h3>Earnings</h3>
+        <dl>
+          <div><dt data-label="basic">Basic salary</dt><dd id="slip-basic"></dd></div>
+          <div><dt data-label="allowances">Allowances</dt><dd id="slip-allowances"></dd></div>
+          <div class="slip-total"><dt data-label="grossPay">Gross pay</dt><dd id="slip-gross"></dd></div>
+        </dl>
+        <h3>Deductions</h3>
+        <dl>
+          <div><dt>PAYE</dt><dd id="slip-paye"></dd></div>
+          <div><dt>NAPSA</dt><dd id="slip-napsa"></dd></div>
+          <div><dt>NHIMA</dt><dd id="slip-nhima"></dd></div>
+        </dl>
+        <dl>
+          <div class="slip-net"><dt data-label="takeHome">Take-home</dt><dd id="slip-net"></dd></div>
+        </dl>
+        <p class="slip-disclaimer">Estimate only. This is not an official payslip and was not issued by an employer.</p>
+      </section>
+
+      <footer class="notes">
+        <h2>What this assumes</h2>
+        <ul>
+          <li>PAYE is charged on gross pay. NAPSA and NHIMA are not deducted first.</li>
+          <li>NAPSA is 5% of gross pay, up to the monthly ceiling. NHIMA is 1% of basic salary, with no cap.</li>
+          <li>Annual figures are twelve equal months.</li>
+          <li>This is an estimate, not tax advice. Check anything important with ZRA or your payroll office.</li>
+        </ul>
+        <h2>Sources</h2>
+        <p id="reviewed"></p>
+        <ul id="sources"></ul>
+      </footer>
+    </main>
+
+    <template id="offer-template">
+      <fieldset class="offer">
+        <legend><span data-label="offer">Offer</span> <span data-slot="letter"></span> <span class="hint" data-slot="optional" data-label="optional">optional</span></legend>
+        <div class="offer-fields">
+          <div class="field">
+            <label data-slot="basic-label" data-label="basic">Basic salary</label>
+            <div class="money-input">
+              <span aria-hidden="true">K</span>
+              <input data-slot="basic" inputmode="decimal" placeholder="0.00" />
+            </div>
+            <p data-slot="basic-error" class="error" role="alert" hidden></p>
+          </div>
+          <div class="field">
+            <label data-slot="allowances-label" data-label="allowances">Allowances</label>
+            <div class="money-input">
+              <span aria-hidden="true">K</span>
+              <input data-slot="allowances" inputmode="decimal" placeholder="0.00" />
+            </div>
+            <p data-slot="allowances-error" class="error" role="alert" hidden></p>
+          </div>
+        </div>
+      </fieldset>
+    </template>
+
+    <script type="module" src="/src/app.ts"></script>
+  </body>
+</html>

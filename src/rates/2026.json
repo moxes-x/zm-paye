@@ -1,0 +1,53 @@
+{
+  "year": 2026,
+  "effectiveFrom": "2026-01-01",
+  "reviewedOn": "2026-11-09",
+  "paye": {
+    "deductNapsaBeforePaye": false,
+    "bands": [
+      { "fromNgwee": 0, "toNgwee": 510000, "rateBps": 0 },
+      { "fromNgwee": 510000, "toNgwee": 710000, "rateBps": 2000 },
+      { "fromNgwee": 710000, "toNgwee": 920000, "rateBps": 3000 },
+      { "fromNgwee": 920000, "toNgwee": null, "rateBps": 3700 }
+    ]
+  },
+  "napsa": {
+    "employeeBps": 500,
+    "employerBps": 500,
+    "ceilingNgwee": 3723600
+  },
+  "nhima": {
+    "employeeBps": 100,
+    "employerBps": 100
+  },
+  "sdl": {
+    "employerBps": 50
+  },
+  "sources": [
+    {
+      "covers": "PAYE bands",
+      "title": "PwC Worldwide Tax Summaries: Zambia, taxes on personal income (2026 charge year, reviewed 24 July 2026)",
+      "url": "https://taxsummaries.pwc.com/zambia/individual/taxes-on-personal-income"
+    },
+    {
+      "covers": "NAPSA ceiling",
+      "title": "PaySpace: NAPSA contribution ceiling increase effective January 2026",
+      "url": "https://support.payspace.com/portal/en/kb/articles/zambia-napsa-contribution-ceiling-increase-effective-january-2026"
+    },
+    {
+      "covers": "PAYE charged on gross (NAPSA and NHIMA not deducted first)",
+      "title": "ZamCalc, citing s.4 of the Income Tax (Amendment) Act No. 22 of 2024. Secondary source: confirm against the Act or with ZRA",
+      "url": "https://zamcalc.com/calculators/paye"
+    },
+    {
+      "covers": "NHIMA 1% of basic salary",
+      "title": "ITWeb Africa: National Health Insurance Fund now enforced (SI No. 63 of 2019)",
+      "url": "https://itweb.africa/content/DZQ587VP4W5qzXy2"
+    },
+    {
+      "covers": "Skills Development Levy on gross emoluments",
+      "title": "Skills Development Levy Act No. 46 of 2016",
+      "url": "https://www.policyvault.africa/policy/the-skills-development-levy-act-2016/?version=0"
+    }
+  ]
+}
