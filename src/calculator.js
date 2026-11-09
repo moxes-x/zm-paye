@@ -1,0 +1,1 @@
+//the business rules {pure functions}
