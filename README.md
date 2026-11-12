@@ -1,14 +1,20 @@
 # Zambia take-home pay calculator
 
-Works out Zambian PAYE, NAPSA, NHIMA and net pay from a monthly salary, and shows how each tax band contributes. It is a static site with no backend, and the calculation runs entirely in the browser.
+**Live site: [zm-paye.vercel.app](https://zm-paye.vercel.app)** · **API: [zm-paye.vercel.app/v1](https://zm-paye.vercel.app/v1)**
+
+Works out Zambian PAYE, NAPSA, NHIMA and net pay from a monthly salary, and shows how each tax band contributes. Enter pay as one gross figure, or as basic salary plus allowances for an exact NHIMA figure. Calculations run in the browser, so nothing typed is sent anywhere.
+
+Try it with an example: [K6,500 gross with K3,250 basic](https://zm-paye.vercel.app/?pay=split&basic=3250&allowances=3250), which matches a real payslip to the ngwee.
 
 It can also:
 
 - work backwards from the take-home pay you want to the salary you need
 - compare up to three job offers side by side
+- convert kwacha to and from 13 other currencies
 - print a one-page pay summary, or save it as a PDF
 - show its labels in Icibemba or Chinyanja (draft translations, see below)
 - link to any calculation through its URL
+- answer the same calculations through a free JSON API (see [API](#api))
 
 ## The rules (2026)
 
@@ -69,7 +75,11 @@ Net pay is guaranteed never to fall for a rise of 6 ngwee or more. Below that, t
 
 ## API
 
-A JSON API runs on the same calculation code as the website, hosted on Vercel ([server/app.ts](server/app.ts)). Any website or app can call it. Amounts go in as kwacha (`6500`, `6,500.50`) and come back as decimal strings (`"5862.50"`), so clients never handle floating-point money.
+A JSON API runs on the same calculation code as the website, hosted on Vercel ([server/app.ts](server/app.ts)). Any website or app can call it.
+
+**Base URL:** `https://zm-paye.vercel.app/v1`. For example, try [/v1/take-home?gross=6500&basic=3250](https://zm-paye.vercel.app/v1/take-home?gross=6500&basic=3250) in a browser.
+
+Amounts go in as kwacha (`6500`, `6,500.50`) and come back as decimal strings (`"5862.50"`), so clients never handle floating-point money.
 
 | Endpoint | Purpose |
 |---|---|
@@ -182,7 +192,7 @@ The Icibemba and Chinyanja labels in [src/i18n.ts](src/i18n.ts) are drafts that 
 
 ## Deployment
 
-The website and API are hosted on [Vercel](https://vercel.com), and [vercel.json](vercel.json) holds the settings.
+The website and API are live at **[zm-paye.vercel.app](https://zm-paye.vercel.app)**, hosted on [Vercel](https://vercel.com). [vercel.json](vercel.json) holds the settings.
 
 1. Sign in to Vercel with GitHub and import the `zm-paye` repository. Vercel reads the build settings from `vercel.json`.
 2. Every push to `main` deploys to production. Every other branch gets its own preview URL.
