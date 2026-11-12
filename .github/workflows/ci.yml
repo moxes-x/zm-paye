@@ -1,0 +1,30 @@
+name: CI
+
+# Vercel deploys from GitHub on its own. This workflow is the quality gate:
+# tests, the site build, and a check that the committed API bundle is current.
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: API bundle is up to date
+        run: |
+          npm run build:api
+          git diff --exit-code api/index.js || {
+            echo "::error::api/index.js is out of date. Run 'npm run build:api' and commit the result."
+            exit 1
+          }

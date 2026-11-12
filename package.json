@@ -1,19 +1,24 @@
 {
   "name": "zm-paye",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "node --test test/*.test.js"
-  },
-  "keywords": [],
-  "author": "",
+  "private": true,
+  "description": "Zambian PAYE and take-home pay calculator",
   "license": "ISC",
-  "type": "module"
-
-  
-
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "build:api": "vite build --config vite.api.config.ts",
+    "api:local": "npm run build:api && node scripts/serve-api.mjs"
+  },
+  "devDependencies": {
+    "fast-check": "^4.10.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.7",
+    "vitest": "^4.1.12"
+  }
 }

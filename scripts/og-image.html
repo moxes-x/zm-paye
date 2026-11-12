@@ -1,0 +1,62 @@
+<!doctype html>
+<!-- Source for public/og-image.png, the 1200×630 link preview. Re-render it with scripts/capture.mjs (see README). -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+      body {
+        display: grid;
+        grid-template-columns: 1fr 470px;
+        gap: 56px;
+        align-items: center;
+        padding: 72px;
+        background: #ffffff;
+        color: #0e0f0c;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+      }
+      .mark { display: flex; align-items: center; gap: 16px; font-size: 26px; font-weight: 600; color: #454745; }
+      .mark svg { width: 56px; height: 56px; }
+      h1 { margin: 36px 0 20px; font-size: 76px; font-weight: 800; line-height: 0.98; letter-spacing: -0.035em; }
+      p { margin: 0; font-size: 30px; line-height: 1.35; color: #454745; }
+      .card { padding: 14px; border-radius: 36px; background: #f2f4f0; }
+      .hero { padding: 32px; border-radius: 28px; background: #163300; color: #fff; }
+      .label { font-size: 24px; color: #c3d0ba; }
+      .net { margin: 4px 0 24px; font-size: 78px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: #ef8d43; }
+      .bar { display: flex; gap: 4px; height: 14px; border-radius: 99px; overflow: hidden; }
+      .rows { padding: 12px 22px 4px; font-size: 25px; }
+      .row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 2px solid #dcdfd8; }
+      .row:last-child { border: 0; }
+      .row span:first-child { display: flex; align-items: center; gap: 12px; }
+      .dot { width: 14px; height: 14px; border-radius: 50%; }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="mark">
+        <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#163300"/><path d="M19 15v34M45 15 23 32l22 17" fill="none" stroke="#ef8d43" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        2026 rates
+      </div>
+      <h1>Zambia take&#8209;home pay</h1>
+      <p>PAYE, NAPSA and NHIMA on your salary, band by band. Free, no sign-up.</p>
+    </div>
+    <div class="card">
+      <div class="hero">
+        <div class="label">K10,000 gross. You take home</div>
+        <div class="net">K8,074.00</div>
+        <div class="bar">
+          <span style="flex: 8074; background: #ef8d43"></span>
+          <span style="flex: 1326; background: #e0605a"></span>
+          <span style="flex: 500; background: #8fc79a"></span>
+          <span style="flex: 100; background: #7fb3e0"></span>
+        </div>
+      </div>
+      <div class="rows">
+        <div class="row"><span><i class="dot" style="background: #e0605a"></i>PAYE</span><span>K1,326.00</span></div>
+        <div class="row"><span><i class="dot" style="background: #8fc79a"></i>NAPSA</span><span>K500.00</span></div>
+        <div class="row"><span><i class="dot" style="background: #7fb3e0"></i>NHIMA</span><span>K100.00</span></div>
+      </div>
+    </div>
+  </body>
+</html>
