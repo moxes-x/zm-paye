@@ -1,6 +1,15 @@
 import { calculate, type PayResult } from './calculator';
 import { compareOffers } from './compare';
 import {
+  animateNumber,
+  fitFigure,
+  initAmountTyping,
+  initReveal,
+  initSegmentThumbs,
+  initTopbar,
+  regroupAmounts,
+} from './ui';
+import {
   currencyName,
   fromKwacha,
   FX_CURRENCIES,
@@ -11,7 +20,7 @@ import {
   type LoadedRates,
 } from './fx';
 import { isLabelKey, label, LANGUAGES, type Lang } from './i18n';
-import { formatKwacha, formatRate, parseMoney, type MoneyError } from './money';
+import { formatEditable, formatKwacha, formatRate, parseMoney, type MoneyError } from './money';
 import { getRates, latestYear } from './rateTable';
 import { requiredPay } from './reverse';
 import {
@@ -50,6 +59,7 @@ const fxCurrencySelect = el<HTMLSelectElement>('fx-currency');
 let fxDirection: FxDirection = 'from-kwacha';
 let fxRates: LoadedRates | 'loading' | 'error' | undefined;
 const bar = el('bar');
+const placeThumbs = initSegmentThumbs();
 
 const ERROR_TEXT: Record<Exclude<MoneyError, 'blank'>, string> = {
   negative: 'Enter an amount of zero or more.',
@@ -175,11 +185,6 @@ function readAllowances(input: HTMLInputElement): number | null {
   return 0;
 }
 
-/** Text for an amount the user can keep editing, such as "10000" or "10000.50". */
-function editableAmount(ngwee: number): string {
-  return formatKwacha(ngwee).slice(1).replaceAll(',', '').replace(/\.00$/, '');
-}
-
 /** Moving to gross entry adds allowances into the main figure, so nothing is lost. */
 function mergeIntoGross(basicField: HTMLInputElement, allowancesField: HTMLInputElement): void {
   const allowances = parseMoney(allowancesField.value);
@@ -190,7 +195,7 @@ function mergeIntoGross(basicField: HTMLInputElement, allowancesField: HTMLInput
   const basic = parseMoney(basicField.value);
   const basicNgwee = basic.ok ? basic.ngwee : basic.error === 'blank' ? 0 : null;
   if (basicNgwee === null) return;
-  basicField.value = editableAmount(basicNgwee + allowances.ngwee);
+  basicField.value = formatEditable(basicNgwee + allowances.ngwee);
   allowancesField.value = '';
 }
 
@@ -231,12 +236,12 @@ function renderBands(result: PayResult, factor: number): void {
   el('bands').replaceChildren(...rows);
 }
 
-function renderBar(result: PayResult): void {
+function renderBar(result: PayResult, target: HTMLElement = bar): void {
   const parts = [result.net, result.paye, result.napsa, result.nhima];
-  bar.querySelectorAll<HTMLElement>('.seg').forEach((segment, i) => {
+  target.querySelectorAll<HTMLElement>('.seg').forEach((segment, i) => {
     segment.style.flexGrow = String(parts[i] ?? 0);
   });
-  bar.classList.toggle('empty', result.gross === 0);
+  target.classList.toggle('empty', result.gross === 0);
 }
 
 function renderSlip(result: PayResult, basic: number, allowances: number, period: Period, lang: Lang): void {
@@ -257,7 +262,8 @@ function renderPay(result: PayResult, basic: number, allowances: number, state: 
   const factor = state.period === 'annual' ? 12 : 1;
   const money = (ngwee: number) => formatKwacha(ngwee * factor);
 
-  setText('net', money(result.net));
+  animateNumber(el('net'), result.net * factor, formatKwacha);
+  setText('net-announce', `You take home ${money(result.net)}`);
   setText('net-row', money(result.net));
   setText('gross', money(result.gross));
   setText('paye', money(result.paye));
@@ -316,6 +322,7 @@ function updateReverse(): void {
 
   const { result, basic } = solved;
   setText('reverse-gross', formatKwacha(result.gross));
+  fitFigure(el('reverse-gross'));
   setText('reverse-basic', formatKwacha(basic));
   setText('reverse-allowances', formatKwacha(allowances));
   setText('reverse-paye', formatKwacha(result.paye));
@@ -511,6 +518,178 @@ function update(): void {
   else if (state.mode === 'reverse') updateReverse();
   else if (state.mode === 'compare') updateCompare(state.lang);
   else updateConvert();
+  placeThumbs();
+  syncQuick();
+  syncShare();
+  syncMini();
+}
+
+// The hero's quick check and the main calculator are one tool: the hero box is the
+// main calculator's gross pay, so typing in either updates both.
+
+const quickInput = el<HTMLInputElement>('quick-gross');
+const EXAMPLE_GROSS = 1_000_000;
+
+function setQuickError(message: string): void {
+  const error = el('quick-gross-error');
+  error.textContent = message;
+  error.hidden = message === '';
+  quickInput.setAttribute('aria-invalid', String(message !== ''));
+  el('quick').classList.toggle('stale', message !== '');
+}
+
+/** Typing in the hero enters the same gross pay in the main calculator. */
+function onQuickInput(): void {
+  const parsed = parseMoney(quickInput.value);
+  const message = !parsed.ok && parsed.error !== 'blank' ? ERROR_TEXT[parsed.error] : '';
+  setQuickError(message);
+  if (message) return;
+  // The hero box is gross pay, so the main calculator switches to gross entry to match.
+  setChecked('pay-entry', 'gross');
+  basicInput.value = quickInput.value;
+  allowancesInput.value = '';
+  // The page-wide input listener runs update() straight after this.
+}
+
+/** Shows the main calculator's pay in the hero card, or the K10,000 example when it is empty. */
+function syncQuick(): void {
+  const typingHere = document.activeElement === quickInput;
+  if (typingHere && quickInput.getAttribute('aria-invalid') === 'true') return;
+
+  const basic = parseMoney(basicInput.value);
+  const split = payEntry() === 'split';
+  const allowances = split ? parseMoney(allowancesInput.value) : null;
+  const blank = (parsed: ReturnType<typeof parseMoney> | null) => !parsed || (!parsed.ok && parsed.error === 'blank');
+  const toNgwee = (parsed: ReturnType<typeof parseMoney> | null) =>
+    !parsed ? 0 : parsed.ok ? parsed.ngwee : parsed.error === 'blank' ? 0 : null;
+
+  let result: PayResult;
+  if (blank(basic) && blank(allowances)) {
+    result = calculate({ basic: EXAMPLE_GROSS, allowances: 0, year });
+    setText('quick-label', `Example: ${formatKwacha(EXAMPLE_GROSS).replace('.00', '')} gross. You take home`);
+    if (!typingHere) quickInput.value = '';
+  } else {
+    const basicNgwee = toNgwee(basic);
+    const allowancesNgwee = toNgwee(allowances);
+    // The main calculator is showing an error for its own box; leave the hero as it is.
+    if (basicNgwee === null || allowancesNgwee === null) return;
+    result = calculate({ basic: basicNgwee, allowances: allowancesNgwee, year });
+    setText('quick-label', 'You take home');
+    if (!typingHere) quickInput.value = formatEditable(basicNgwee + allowancesNgwee);
+  }
+
+  if (!typingHere) setQuickError('');
+  animateNumber(el('quick-net'), result.net, formatKwacha);
+  setText('quick-paye', formatKwacha(result.paye));
+  setText('quick-napsa', formatKwacha(result.napsa));
+  setText('quick-nhima', formatKwacha(result.nhima));
+  renderBar(result, el('quick-bar'));
+}
+
+/** "See the full breakdown" opens the Take-home tab; the figures are already there. */
+function openFullBreakdown(): void {
+  setChecked('mode', 'pay');
+  update();
+}
+
+// Sharing the result, mostly to WhatsApp.
+
+function shareMessage(): string {
+  const result = el('result');
+  if (result.classList.contains('is-empty') || result.classList.contains('stale')) {
+    return 'Work out your take-home pay in Zambia: PAYE, NAPSA and NHIMA band by band.';
+  }
+  const per = checkedValue('period') === 'annual' ? 'a year' : 'a month';
+  return `On ${el('gross').textContent} gross ${per}, I take home ${el('net-row').textContent} after PAYE, NAPSA and NHIMA. Work out yours:`;
+}
+
+function syncShare(): void {
+  const text = `${shareMessage()} ${location.href}`;
+  el<HTMLAnchorElement>('whatsapp').href = `https://wa.me/?text=${encodeURIComponent(text)}`;
+}
+
+/** Opens the phone's share sheet; elsewhere copies the message and link. */
+async function shareResult(): Promise<void> {
+  const status = el('share-status');
+  const text = shareMessage();
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: 'Zambia take-home pay', text, url: location.href });
+      return;
+    } catch (error) {
+      if ((error as DOMException).name === 'AbortError') return;
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(`${text} ${location.href}`);
+    status.textContent = 'Copied. Paste it into a chat.';
+  } catch {
+    status.textContent = 'Copy the link from your address bar';
+  }
+}
+
+// Phones: a bar pinned to the bottom keeps the answer in sight when the keyboard or
+// scrolling hides the result card.
+
+const mini = el<HTMLButtonElement>('mini-result');
+const narrowScreen = window.matchMedia('(max-width: 819px)');
+const calculatorSection = el('calculator');
+const payHero = el('result').querySelector<HTMLElement>('.hero') as HTMLElement;
+const reverseHero = el('reverse-result').querySelector<HTMLElement>('.hero') as HTMLElement;
+const inView = new Map<Element, boolean>();
+
+function syncMini(): void {
+  const mode = checkedValue('mode');
+  const hero = mode === 'pay' ? payHero : mode === 'reverse' ? reverseHero : null;
+  const card = mode === 'pay' ? el('result') : el('reverse-result');
+  const hasAnswer =
+    hero !== null &&
+    !card.classList.contains('stale') &&
+    !card.classList.contains('is-empty') &&
+    (mode !== 'reverse' || targetInput.value.trim() !== '');
+  const show = Boolean(
+    narrowScreen.matches && hero && hasAnswer && inView.get(calculatorSection) && inView.get(hero) === false,
+  );
+
+  mini.classList.toggle('show', show);
+  mini.tabIndex = show ? 0 : -1;
+  mini.setAttribute('aria-hidden', String(!show));
+  if (!show) return;
+
+  const lang = languageSelect.value as Lang;
+  if (mode === 'pay') {
+    setText('mini-label', label(lang, 'takeHome'));
+    setText('mini-net', el('net-row').textContent ?? '');
+    setText('mini-sub', checkedValue('period') === 'annual' ? 'a year' : 'a month');
+  } else {
+    setText('mini-label', label(lang, 'grossNeeded'));
+    setText('mini-net', el('reverse-gross').textContent ?? '');
+    setText('mini-sub', 'a month');
+  }
+  mini.setAttribute('aria-label', `${el('mini-label').textContent} ${el('mini-net').textContent}. Show the full result`);
+}
+
+function initMini(): void {
+  if (!('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        // The result counts as hidden once less than a quarter of it shows.
+        inView.set(entry.target, entry.target === calculatorSection ? entry.isIntersecting : entry.intersectionRatio >= 0.25);
+      }
+      syncMini();
+    },
+    { threshold: [0, 0.25] },
+  );
+  [calculatorSection, payHero, reverseHero].forEach((target) => observer.observe(target));
+  narrowScreen.addEventListener('change', syncMini);
+
+  mini.addEventListener('click', () => {
+    const hero = checkedValue('mode') === 'reverse' ? reverseHero : payHero;
+    (document.activeElement as HTMLElement | null)?.blur();
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    hero.scrollIntoView({ block: 'center', behavior: smooth ? 'smooth' : 'auto' });
+  });
 }
 
 async function copyLink(): Promise<void> {
@@ -563,16 +742,10 @@ function renderRules(): void {
   setText('ex-nhima', formatKwacha(example.nhima));
   setText('ex-net', formatKwacha(example.net));
 
-  setText('hero-ex-net', formatKwacha(example.net));
-  setText('hero-ex-paye', formatKwacha(example.paye));
-  setText('hero-ex-napsa', formatKwacha(example.napsa));
-  setText('hero-ex-nhima', formatKwacha(example.nhima));
-  const parts = [example.net, example.paye, example.napsa, example.nhima];
-  el('hero-ex-bar')
-    .querySelectorAll<HTMLElement>('.seg')
-    .forEach((segment, i) => {
-      segment.style.flexGrow = String(parts[i] ?? 0);
-    });
+  const bands = rates.paye.bands;
+  setText('stat-threshold', formatKwacha(bands[0]?.toNgwee ?? 0).replace('.00', ''));
+  setText('stat-top', formatRate(bands[bands.length - 1]?.rateBps ?? 0));
+  setText('stat-napsa', formatKwacha(napsaMax));
 }
 
 function renderSources(): void {
@@ -625,4 +798,13 @@ el('fx-retry').addEventListener('click', () => {
   fxRates = undefined;
   update();
 });
+quickInput.addEventListener('input', onQuickInput);
+el('quick-more').addEventListener('click', openFullBreakdown);
+el('share').addEventListener('click', () => void shareResult());
+
+initAmountTyping();
+regroupAmounts();
+initTopbar();
+initReveal();
+initMini();
 update();

@@ -33,7 +33,14 @@ await send('Emulation.setDeviceMetricsOverride', {
   deviceScaleFactor: 1,
   mobile: Number(width) < 600,
 });
-await send('Emulation.setEmulatedMedia', { media, features: [{ name: 'prefers-color-scheme', value: scheme }] });
+// MOTION=reduce emulates a reduced-motion preference, which also skips scroll fade-ins.
+await send('Emulation.setEmulatedMedia', {
+  media,
+  features: [
+    { name: 'prefers-color-scheme', value: scheme },
+    { name: 'prefers-reduced-motion', value: process.env.MOTION === 'reduce' ? 'reduce' : 'no-preference' },
+  ],
+});
 await send('Page.navigate', { url });
 await new Promise((resolve) => setTimeout(resolve, 1500));
 

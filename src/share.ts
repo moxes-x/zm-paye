@@ -80,8 +80,9 @@ export function readQuery(search: string): FormState {
 /** Writes form state as a query string, leaving out anything at its default. */
 export function writeQuery(state: FormState): string {
   const params = new URLSearchParams();
+  // Thousands separators are for reading on screen; links stay clean as "6500".
   const setText = (name: string, value: string | undefined) => {
-    const trimmed = value?.trim();
+    const trimmed = value?.trim().replaceAll(',', '');
     if (trimmed) params.set(name, trimmed);
   };
   const split = state.payEntry === 'split';

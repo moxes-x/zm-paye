@@ -37,6 +37,7 @@ const en = {
   currency: 'Currency',
   iKnowMy: 'I know my',
   basicPlusAllowances: 'Basic + allowances',
+  share: 'Share',
 } as const;
 
 export type LabelKey = keyof typeof en;
@@ -73,6 +74,7 @@ const LABELS: Record<Lang, Record<LabelKey, string>> = {
     currency: 'Umusango wa ndalama',
     iKnowMy: 'Ndeishiba',
     basicPlusAllowances: 'Basic na ma-allowance',
+    share: 'Tuma',
   },
   // Draft translations, not yet checked by a fluent speaker.
   ny: {
@@ -104,6 +106,7 @@ const LABELS: Record<Lang, Record<LabelKey, string>> = {
     currency: 'Mtundu wa ndalama',
     iKnowMy: 'Ndikudziwa',
     basicPlusAllowances: 'Basic ndi ma-allowance',
+    share: 'Gawani',
   },
 };
 

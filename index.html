@@ -8,7 +8,7 @@
       name="description"
       content="Free PAYE calculator for Zambia. See your PAYE band by band, NAPSA, NHIMA and take-home pay, the salary you need, and which job offer pays more."
     />
-    <meta name="theme-color" content="#163300" />
+    <meta name="theme-color" content="#0b1f4d" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Zambia take-home pay" />
@@ -31,7 +31,7 @@
       <div class="container topbar-inner">
         <a class="brand" href="#top">
           <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
-            <rect width="64" height="64" rx="16" fill="#163300" />
+            <rect width="64" height="64" rx="16" fill="#0b1f4d" />
             <path d="M19 15v34M45 15 23 32l22 17" fill="none" stroke="#ef8d43" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <span data-label="title">Zambia take-home pay</span>
@@ -46,20 +46,21 @@
           <label for="language" data-label="language">Language</label>
           <select id="language"></select>
         </div>
+        <a class="nav-cta" href="#calculator">Calculate</a>
       </div>
     </header>
 
     <section id="top" class="landing-hero">
       <div class="container landing-grid">
         <div class="landing-copy">
-          <p class="eyebrow">Updated for <span id="rates-year">2026</span> ZRA rates</p>
+          <p class="badge-pill"><b><span id="rates-year">2026</span></b> Updated for this year's ZRA rates</p>
           <h1>Know what you'll <em>actually</em> take home.</h1>
           <p class="lede">
-            A free PAYE calculator for Zambia. Enter your gross pay and see your PAYE, NAPSA and NHIMA band by band,
-            the same way your payslip works them out.
+            A free PAYE calculator for Zambia. Type your gross pay and see your PAYE, NAPSA and NHIMA band by band, the
+            same way your payslip works them out.
           </p>
           <div class="cta-row">
-            <a class="button-primary" href="#calculator">Calculate my pay</a>
+            <a class="button-primary" href="#calculator">Open the full calculator</a>
             <a class="hero-link" href="#how">How it's worked out</a>
           </div>
           <ul class="proof">
@@ -69,28 +70,51 @@
           </ul>
         </div>
 
-        <figure class="example-card" aria-label="Example: K10,000 gross pay">
-          <div class="example-hero">
-            <p class="example-label">K10,000 gross. You take home</p>
-            <p id="hero-ex-net" class="example-net">K8,074.00</p>
-            <div id="hero-ex-bar" class="bar" aria-hidden="true">
+        <form id="quick" class="quick-card" novalidate autocomplete="off" aria-labelledby="quick-title">
+          <p class="quick-head">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span id="quick-title">Quick take-home check</span>
+          </p>
+          <label for="quick-gross" class="quick-label">Your gross pay a month</label>
+          <div class="quick-input">
+            <span aria-hidden="true">K</span>
+            <input id="quick-gross" inputmode="decimal" placeholder="10,000" aria-describedby="quick-gross-error" />
+          </div>
+          <p id="quick-gross-error" class="error" role="alert" hidden></p>
+
+          <div class="quick-result">
+            <p id="quick-label" class="quick-result-label">Example: K10,000 gross. You take home</p>
+            <p id="quick-net" class="quick-net">K8,074.00</p>
+            <div id="quick-bar" class="bar" aria-hidden="true">
               <span class="seg seg-net" style="flex-grow: 8074"></span>
               <span class="seg seg-paye" style="flex-grow: 1326"></span>
               <span class="seg seg-napsa" style="flex-grow: 500"></span>
               <span class="seg seg-nhima" style="flex-grow: 100"></span>
             </div>
           </div>
-          <dl class="rows">
-            <div class="row"><dt><i class="dot seg-paye"></i>PAYE</dt><dd id="hero-ex-paye">K1,326.00</dd></div>
-            <div class="row"><dt><i class="dot seg-napsa"></i>NAPSA</dt><dd id="hero-ex-napsa">K500.00</dd></div>
-            <div class="row"><dt><i class="dot seg-nhima"></i>NHIMA</dt><dd id="hero-ex-nhima">K100.00</dd></div>
+          <dl class="rows quick-rows">
+            <div class="row"><dt><i class="dot seg-paye"></i>PAYE</dt><dd id="quick-paye">K1,326.00</dd></div>
+            <div class="row"><dt><i class="dot seg-napsa"></i>NAPSA</dt><dd id="quick-napsa">K500.00</dd></div>
+            <div class="row"><dt><i class="dot seg-nhima"></i>NHIMA</dt><dd id="quick-nhima">K100.00</dd></div>
           </dl>
-        </figure>
+          <a id="quick-more" class="quick-more" href="#calculator">See the full breakdown <span aria-hidden="true">→</span></a>
+        </form>
+      </div>
+
+      <div class="container">
+        <dl class="stats" data-reveal>
+          <div class="stat"><dt>Tax-free every month</dt><dd id="stat-threshold">K5,100</dd></div>
+          <div class="stat"><dt>Top PAYE rate</dt><dd id="stat-top">37%</dd></div>
+          <div class="stat"><dt>The most NAPSA can take</dt><dd id="stat-napsa">K1,861.80</dd></div>
+          <div class="stat"><dt>Sign-ups or data sent</dt><dd>0</dd></div>
+        </dl>
       </div>
     </section>
 
     <main id="calculator" class="page">
+      <p class="eyebrow eyebrow-dark">Calculator</p>
       <h2 class="section-heading">Work out your pay</h2>
+      <p class="section-sub">Pick a tool and type a number. Everything updates as you type.</p>
       <p id="draft-note" class="draft-note" hidden>
         Draft translation, not yet checked by a fluent speaker. Tax explanations stay in English.
       </p>
@@ -109,6 +133,9 @@
           <label><input type="radio" name="pay-entry" value="gross" checked /><span data-label="grossPay">Gross pay</span></label>
           <label><input type="radio" name="pay-entry" value="split" /><span data-label="basicPlusAllowances">Basic + allowances</span></label>
         </div>
+        <p class="entry-hint">
+          Not sure? Choose gross pay. It's the total on your offer letter or payslip before anything is taken off.
+        </p>
       </fieldset>
 
       <div id="view-pay">
@@ -146,7 +173,8 @@
             </fieldset>
 
             <p id="net-label" class="net-label" data-label="youTakeHome">You take home</p>
-            <p id="net" class="net" aria-live="polite">K0.00</p>
+            <p id="net" class="net">K0.00</p>
+            <p id="net-announce" class="visually-hidden" aria-live="polite"></p>
 
             <div id="bar" class="bar" aria-hidden="true">
               <span class="seg seg-net"></span>
@@ -199,7 +227,10 @@
           </div>
 
           <div class="share">
-            <button id="print" type="button" data-label="print">Print or save as PDF</button>
+            <button id="share" type="button" data-label="share">Share</button>
+            <a id="whatsapp" class="link-button" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
+            <button id="print" type="button" class="link-button" data-label="print">Print or save as PDF</button>
+            <span id="share-status" role="status"></span>
           </div>
         </section>
       </div>
@@ -303,29 +334,65 @@
       </div>
     </main>
 
+    <!-- Phones: keeps the answer in sight while the keyboard covers the result. -->
+    <button id="mini-result" class="mini-result" type="button" tabindex="-1" aria-hidden="true">
+      <span class="mini-text">
+        <span id="mini-label" class="mini-label">Take-home</span>
+        <strong id="mini-net">K0.00</strong>
+      </span>
+      <span id="mini-sub" class="mini-sub">a month</span>
+      <span class="mini-go" aria-hidden="true">↓</span>
+    </button>
+
     <section id="features" class="band">
       <div class="container">
-        <h2 class="band-title">Four tools, one page</h2>
+        <p class="eyebrow eyebrow-dark" data-reveal>Tools</p>
+        <h2 class="band-title" data-reveal>Four tools, one page</h2>
         <div class="feature-grid">
-          <a class="feature" href="#calculator" data-go-mode="pay">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.5" /><circle cx="12" cy="12" r="2.6" /><path d="M6 9.5v5M18 9.5v5" /></svg>
+          <a class="feature feature-wide" href="#calculator" data-go-mode="pay" data-reveal>
+            <span class="feature-top">
+              <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.5" /><circle cx="12" cy="12" r="2.6" /><path d="M6 9.5v5M18 9.5v5" /></svg></span>
+              <span class="feature-badge">Most used</span>
+            </span>
             <h3>Take-home pay</h3>
             <p>See what lands in your account, with PAYE shown band by band and what your job costs your employer.</p>
+            <span class="feature-visual" aria-hidden="true">
+              <span class="fv-row"><span>Take-home</span><i style="--w: 80%; --c: var(--net)"></i></span>
+              <span class="fv-row"><span>PAYE</span><i style="--w: 13%; --c: var(--paye)"></i></span>
+              <span class="fv-row"><span>NAPSA</span><i style="--w: 5%; --c: var(--napsa)"></i></span>
+              <span class="fv-row"><span>NHIMA</span><i style="--w: 1.5%; --c: var(--nhima)"></i></span>
+            </span>
+            <span class="feature-open">Open <span aria-hidden="true">→</span></span>
           </a>
-          <a class="feature" href="#calculator" data-go-mode="reverse">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.4" /></svg>
+          <a class="feature" href="#calculator" data-go-mode="reverse" data-reveal>
+            <span class="feature-top">
+              <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.4" /></svg></span>
+              <span class="feature-badge">Interview prep</span>
+            </span>
             <h3>Salary needed</h3>
             <p>Know the take-home you need? Get the exact gross salary to ask for in an interview.</p>
+            <span class="feature-open">Open <span aria-hidden="true">→</span></span>
           </a>
-          <a class="feature" href="#calculator" data-go-mode="compare">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>
+          <a class="feature" href="#calculator" data-go-mode="compare" data-reveal>
+            <span class="feature-top">
+              <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg></span>
+              <span class="feature-badge">Up to 3 offers</span>
+            </span>
             <h3>Compare offers</h3>
-            <p>Put up to three job offers side by side and see which one really pays more each month.</p>
+            <p>Put job offers side by side and see which one really pays more each month.</p>
+            <span class="feature-open">Open <span aria-hidden="true">→</span></span>
           </a>
-          <a class="feature" href="#calculator" data-go-mode="convert">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h14l-4-4M20 16H6l4 4" /></svg>
+          <a class="feature feature-wide" href="#calculator" data-go-mode="convert" data-reveal>
+            <span class="feature-top">
+              <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h14l-4-4M20 16H6l4 4" /></svg></span>
+              <span class="feature-badge">13 currencies</span>
+            </span>
             <h3>Currency converter</h3>
-            <p>Convert kwacha to dollars, rand and 11 other currencies at today's mid-market rate.</p>
+            <p>Convert kwacha to dollars, rand and 11 other currencies at today's mid-market rate. Type in either box.</p>
+            <span class="feature-chips" aria-hidden="true">
+              <span>ZMW</span><span>USD</span><span>ZAR</span><span>GBP</span><span>EUR</span><span>CNY</span><span>BWP</span><span>+7</span>
+            </span>
+            <span class="feature-open">Open <span aria-hidden="true">→</span></span>
           </a>
         </div>
       </div>
@@ -334,9 +401,10 @@
     <section id="how" class="band band-tint">
       <div class="container how-grid">
         <div>
-          <h2 class="band-title">How it's worked out</h2>
+          <p class="eyebrow eyebrow-dark" data-reveal>The rules</p>
+          <h2 class="band-title" data-reveal>How it's worked out</h2>
           <p class="band-lede">Three deductions come off your pay. Each one uses a different base, which is why payslips can be confusing.</p>
-          <div class="rule">
+          <div class="rule" data-reveal>
             <h3>PAYE <span class="rule-base">on gross pay</span></h3>
             <p>Income tax, charged in bands. Only the part of your pay inside each band is taxed at that band's rate.</p>
             <table class="rule-table">
@@ -344,17 +412,17 @@
               <tbody id="rules-bands"></tbody>
             </table>
           </div>
-          <div class="rule">
+          <div class="rule" data-reveal>
             <h3>NAPSA <span class="rule-base">on gross pay</span></h3>
             <p id="rule-napsa">5% of gross pay, up to a monthly ceiling.</p>
           </div>
-          <div class="rule">
+          <div class="rule" data-reveal>
             <h3>NHIMA <span class="rule-base">on basic salary</span></h3>
             <p id="rule-nhima">1% of basic salary only, with no cap.</p>
           </div>
         </div>
 
-        <div class="worked">
+        <div class="worked" data-reveal>
           <h3>Worked example: K10,000 gross</h3>
           <dl class="rows">
             <div class="row"><dt>Gross pay</dt><dd id="ex-gross">K10,000.00</dd></div>
@@ -375,8 +443,9 @@
 
     <section id="faq" class="band">
       <div class="container faq-wrap">
-        <h2 class="band-title">Questions people ask</h2>
-        <div class="faq">
+        <p class="eyebrow eyebrow-dark" data-reveal>FAQ</p>
+        <h2 class="band-title" data-reveal>Questions people ask</h2>
+        <div class="faq" data-reveal>
           <details>
             <summary>What's the difference between gross pay and basic salary?</summary>
             <p>
@@ -444,7 +513,7 @@
           </ul>
           <a class="hero-link" href="https://github.com/moxes-x/zm-paye#api">Read the API docs</a>
         </div>
-        <pre class="code" aria-label="Example request and response"><code><span class="code-dim">$</span> curl "https://zm-paye.vercel.app/v1/take-home?gross=6500&amp;basic=3250"
+        <div class="code-window" data-reveal><div class="code-bar" aria-hidden="true"><i></i><i></i><i></i><span>take-home.sh</span></div><pre class="code" aria-label="Example request and response"><code><span class="code-dim">$</span> curl "https://zm-paye.vercel.app/v1/take-home?gross=6500&amp;basic=3250"
 
 {
   "monthly": {
@@ -454,7 +523,7 @@
     "nhima": "32.50",
     "net":   <span class="code-accent">"5862.50"</span>
   }
-}</code></pre>
+}</code></pre></div>
       </div>
     </section>
 

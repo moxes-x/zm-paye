@@ -168,7 +168,7 @@ The Convert tab converts between kwacha and 13 currencies, starting with USD and
 
 ## Design and images
 
-The look borrows from Wise's design system: forest green, pill controls, hairline borders and a single accent. Here the accent is copper, taken from the eagle on the Zambian flag. The page uses system fonts and no images, so it stays light on mobile data.
+The look borrows from Wise's design system (pill controls, hairline borders, a single accent) with colours from the kwacha notes: K50 blue for the brand, K10 aqua for NAPSA and K5 purple for NHIMA. The accent is copper, taken from the eagle on the Zambian flag. The page uses system fonts and no images, so it stays light on mobile data.
 
 - `public/favicon.svg` is the tab icon.
 - `public/og-image.png` is the 1200×630 preview shown when a link is shared on WhatsApp or social media. Its source is [scripts/og-image.html](scripts/og-image.html). After editing it, start Chrome or Edge with `--headless=new --remote-debugging-port=9334` and run:

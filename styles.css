@@ -1,44 +1,45 @@
-/* Wise-inspired system: forest green, one copper accent (from the eagle on the
-   Zambian flag), pill controls, hairline borders, no gradients. */
+/* Colours from the kwacha notes: K50 blue for the brand, K10 aqua and K5 purple
+   in the breakdown, with a copper accent from the eagle on the Zambian flag.
+   Pill controls and hairline borders. */
 :root {
   --canvas: #ffffff;
-  --panel: #f2f4f0;
-  --ink: #0e0f0c;
-  --text: #454745;
-  --muted: #6a6c6a;
-  --line: #dcdfd8;
-  --border: #868685;
-  --forest: #163300;
+  --panel: #f1f4f9;
+  --ink: #0b1220;
+  --text: #3f4756;
+  --muted: #5f6878;
+  --line: #dde3ec;
+  --border: #8a93a3;
+  --brand: #12306b;
   --copper: #ef8d43;
-  --on-copper: #163300;
+  --on-copper: #0b1f4d;
   --copper-tint: #fdeee1;
   --error: #cb272f;
-  --hero-bg: #163300;
+  --hero-bg: #0b1f4d;
   --hero-text: #ffffff;
-  --hero-muted: #c3d0ba;
+  --hero-muted: #b9c4dc;
   --hero-line: rgba(255, 255, 255, 0.14);
   --net: #ef8d43;
   --paye: #e0605a;
-  --napsa: #8fc79a;
-  --nhima: #7fb3e0;
+  --napsa: #4fc3c9;
+  --nhima: #a78bfa;
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --canvas: #0f130d;
-    --panel: #181d15;
-    --ink: #f2f4ef;
-    --text: #d5dad0;
-    --muted: #9ba393;
-    --line: #2c3327;
-    --border: #5f665a;
-    --forest: #a8d98a;
+    --canvas: #0b0f19;
+    --panel: #141a28;
+    --ink: #eef2f8;
+    --text: #d3d9e4;
+    --muted: #98a2b5;
+    --line: #252d3d;
+    --border: #5a6478;
+    --brand: #8fb4ff;
     --copper: #f29a55;
     --copper-tint: #3a2614;
     --error: #ff8a80;
-    --hero-bg: #1c3a0c;
-    --hero-muted: #b4c4a9;
+    --hero-bg: #12224a;
+    --hero-muted: #aab7d3;
   }
 }
 
@@ -86,7 +87,7 @@ html {
   z-index: 10;
   padding: 0.6rem 1rem;
   border-radius: 9999px;
-  background: var(--forest);
+  background: var(--brand);
   color: var(--canvas);
   font-weight: 700;
 }
@@ -167,7 +168,7 @@ html {
   font-weight: 500;
 }
 
-/* Landing hero: a full-bleed forest band */
+/* Landing hero: a full-bleed navy band */
 
 .landing-hero {
   background: var(--hero-bg);
@@ -271,45 +272,8 @@ html {
   flex: none;
   border-radius: 50%;
   background: var(--copper)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%23163300' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%230b1f4d' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
     center / 100% no-repeat;
-}
-
-/* The example card is a static picture of the product, like the share image */
-
-.example-card {
-  display: none;
-  margin: 0;
-  padding: 0.6rem;
-  border-radius: 28px;
-  background: var(--panel);
-  color: var(--text);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
-}
-
-.example-hero {
-  padding: 1.5rem;
-  border-radius: 22px;
-  background: var(--hero-bg);
-  box-shadow: inset 0 0 0 1px var(--hero-line);
-}
-
-.example-label {
-  margin: 0;
-  color: var(--hero-muted);
-}
-
-.example-net {
-  margin: 0.15rem 0 1rem;
-  color: var(--copper);
-  font-size: 3.25rem;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.example-card .rows {
-  padding: 0.25rem 1rem 0.25rem;
 }
 
 /* Calculator section */
@@ -385,7 +349,7 @@ html {
 }
 
 .feature:focus-visible {
-  outline: 3px solid var(--forest);
+  outline: 3px solid var(--brand);
   outline-offset: 2px;
 }
 
@@ -393,7 +357,7 @@ html {
   width: 1.75rem;
   height: 1.75rem;
   fill: none;
-  stroke: var(--forest);
+  stroke: var(--brand);
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -506,7 +470,7 @@ html {
   height: 1.75rem;
   border-radius: 50%;
   background: var(--panel);
-  color: var(--forest);
+  color: var(--brand);
   font-weight: 800;
   line-height: 1.75rem;
   text-align: center;
@@ -579,7 +543,7 @@ html {
 
 .footer-line a {
   margin-left: 0.5rem;
-  color: var(--forest);
+  color: var(--brand);
 }
 
 .draft-note {
@@ -619,15 +583,15 @@ html {
 }
 
 /* Copper is kept for the take-home figure and the main button, so selected
-   segments use forest instead (white inside the dark hero). */
+   segments use the brand blue instead (white inside the dark hero). */
 .period input:checked + span {
-  background: var(--forest);
+  background: var(--brand);
   color: var(--canvas);
   font-weight: 700;
 }
 
 .period input:focus-visible + span {
-  outline: 2px solid var(--forest);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 
@@ -791,7 +755,7 @@ body:not([data-pay-entry='gross']) .gross-only {
 
 .fx-select option {
   background: #ffffff;
-  color: #0e0f0c;
+  color: #0b1220;
 }
 
 .hero .error {
@@ -805,12 +769,12 @@ body:not([data-pay-entry='gross']) .gross-only {
 }
 
 .fine-print a {
-  color: var(--forest);
+  color: var(--brand);
 }
 
 .money-input:focus-within {
-  border-color: var(--forest);
-  box-shadow: inset 0 0 0 1px var(--forest);
+  border-color: var(--brand);
+  box-shadow: inset 0 0 0 1px var(--brand);
 }
 
 .money-input span {
@@ -873,7 +837,7 @@ body:not([data-pay-entry='gross']) .gross-only {
 
 .hero .period input:checked + span {
   background: var(--hero-text);
-  color: #163300;
+  color: var(--hero-bg);
 }
 
 .hero .period input:focus-visible + span {
@@ -1003,7 +967,7 @@ body:not([data-pay-entry='gross']) .gross-only {
 
 details.panel summary {
   padding: 0.4rem 0;
-  color: var(--forest);
+  color: var(--brand);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -1070,7 +1034,7 @@ th.best {
 .toggle input {
   width: 1.2rem;
   height: 1.2rem;
-  accent-color: var(--forest);
+  accent-color: var(--brand);
 }
 
 .employer {
@@ -1087,7 +1051,7 @@ th.best {
   margin-top: 1rem;
 }
 
-#print {
+#share {
   min-height: 3rem;
   padding: 0 1.5rem;
   border: 0;
@@ -1104,7 +1068,7 @@ th.best {
   padding: 0;
   border: 0;
   background: none;
-  color: var(--forest);
+  color: var(--brand);
   font: inherit;
   font-weight: 600;
   text-decoration: underline;
@@ -1112,13 +1076,14 @@ th.best {
   cursor: pointer;
 }
 
-#print:focus-visible,
+#share:focus-visible,
 .link-button:focus-visible {
-  outline: 2px solid var(--forest);
+  outline: 2px solid var(--brand);
   outline-offset: 3px;
 }
 
-#copy-status {
+#copy-status,
+#share-status {
   color: var(--muted);
   font-size: 0.875rem;
 }
@@ -1208,7 +1173,7 @@ th.best {
 }
 
 .notes a {
-  color: var(--forest);
+  color: var(--brand);
   text-underline-offset: 2px;
 }
 
@@ -1298,10 +1263,6 @@ th.best {
     gap: 3rem;
     padding-top: 4.5rem;
     padding-bottom: 5rem;
-  }
-
-  .example-card {
-    display: block;
   }
 
   .how-grid {
@@ -1501,5 +1462,930 @@ th.best {
     display: inline-block;
     min-width: 13rem;
     margin: 0 0.5rem 0 0;
+  }
+}
+
+/* ==========================================================================
+   Revamp: patterns from 21st.dev (payments hero, floating nav, sliding
+   segmented control, bento grid, smooth accordion), rebuilt without a framework.
+   ========================================================================== */
+
+html {
+  interpolate-size: allow-keywords;
+}
+
+/* Sticky, frosted top bar */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid transparent;
+  background: color-mix(in srgb, var(--canvas) 82%, transparent);
+  -webkit-backdrop-filter: saturate(1.6) blur(14px);
+  backdrop-filter: saturate(1.6) blur(14px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.topbar.scrolled {
+  border-bottom-color: var(--line);
+  box-shadow: 0 12px 30px -20px rgba(14, 15, 12, 0.35);
+}
+
+.topbar-inner {
+  gap: 0.75rem;
+}
+
+.nav-cta {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  border-radius: 9999px;
+  background: var(--brand);
+  color: var(--canvas);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.nav-cta:hover {
+  filter: brightness(1.2);
+}
+
+.nav-cta:focus-visible {
+  outline: 3px solid var(--copper);
+  outline-offset: 2px;
+}
+
+@media (max-width: 419px) {
+  .brand span {
+    display: none;
+  }
+}
+
+/* Hero: navy band, soft glow and a dotted texture */
+
+.landing-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(70% 60% at 85% 5%, rgba(239, 141, 67, 0.2), transparent 60%),
+    radial-gradient(60% 50% at 0% 100%, rgba(79, 195, 201, 0.14), transparent 60%),
+    var(--hero-bg);
+}
+
+.landing-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 65% 35%, #000 15%, transparent 72%);
+  mask-image: radial-gradient(ellipse 75% 65% at 65% 35%, #000 15%, transparent 72%);
+  pointer-events: none;
+}
+
+.landing-grid {
+  grid-template-columns: minmax(0, 1fr);
+  padding-bottom: 2rem;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.25rem;
+  padding: 0.3rem 0.9rem 0.3rem 0.3rem;
+  border: 1px solid var(--hero-line);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--hero-text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.badge-pill b {
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+  background: var(--copper);
+  color: var(--on-copper);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.landing-hero h1 {
+  font-size: clamp(2.6rem, 10vw, 5rem);
+}
+
+.landing-hero h1 em {
+  padding-right: 0.04em;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.button-primary {
+  box-shadow: 0 14px 34px -14px rgba(239, 141, 67, 0.75);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.button-primary:hover {
+  transform: translateY(-1px);
+}
+
+.button-primary:active,
+.quick-more:active,
+.nav-cta:active,
+#share:active {
+  transform: scale(0.98);
+}
+
+/* Live quick-check card in the hero */
+
+.quick-card {
+  position: relative;
+  margin: 0;
+  padding: 1.25rem;
+  border-radius: 28px;
+  background: var(--canvas);
+  color: var(--text);
+  box-shadow:
+    0 40px 90px -30px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.quick-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.live-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: #4fc3c9;
+  animation: live-pulse 2s ease-out infinite;
+}
+
+@keyframes live-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(79, 195, 201, 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 8px rgba(79, 195, 201, 0);
+  }
+}
+
+.quick-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.quick-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background: var(--panel);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.quick-input:focus-within {
+  border-color: var(--brand);
+  background: var(--canvas);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+.quick-input:has(input[aria-invalid='true']) {
+  border-color: var(--error);
+}
+
+.quick-input span {
+  color: var(--muted);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.quick-input input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 4rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.quick-input input::placeholder {
+  color: color-mix(in srgb, var(--muted) 50%, transparent);
+}
+
+.quick-result {
+  margin-top: 0.9rem;
+  padding: 1.25rem;
+  border-radius: 20px;
+  background: var(--hero-bg);
+}
+
+.quick-result-label {
+  margin: 0;
+  color: var(--hero-muted);
+  font-size: 0.9rem;
+}
+
+.quick-net {
+  margin: 0.15rem 0 0.9rem;
+  color: var(--copper);
+  font-size: clamp(2.4rem, 11vw, 3.25rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.quick-rows {
+  padding: 0.4rem 0.35rem 0;
+}
+
+.quick-rows .row {
+  padding: 0.5rem 0;
+}
+
+.quick-card.stale .quick-result,
+.quick-card.stale .quick-rows {
+  opacity: 0.4;
+}
+
+.quick-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 3.1rem;
+  margin-top: 0.75rem;
+  border-radius: 9999px;
+  background: var(--brand);
+  color: var(--canvas);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.quick-more:hover {
+  filter: brightness(1.2);
+}
+
+.quick-more span,
+.feature-open span {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.quick-more:hover span,
+.feature:hover .feature-open span {
+  transform: translateX(4px);
+}
+
+.quick-more:focus-visible {
+  outline: 3px solid var(--copper);
+  outline-offset: 3px;
+}
+
+/* Stats strip under the hero */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 2.5rem;
+  overflow: hidden;
+  border: 1px solid var(--hero-line);
+  border-radius: 20px;
+  background: var(--hero-line);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.2rem;
+  padding: 1rem 1.1rem;
+  background: color-mix(in srgb, var(--hero-bg) 85%, #000);
+}
+
+.stat dt {
+  color: var(--hero-muted);
+  font-size: 0.8125rem;
+}
+
+.stat dd {
+  margin: 0;
+  color: var(--hero-text);
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat:first-child dd {
+  color: var(--copper);
+}
+
+/* Calculator heading */
+
+.eyebrow-dark {
+  color: var(--brand);
+}
+
+.section-sub {
+  margin: -0.6rem 0 1.5rem;
+  color: var(--muted);
+}
+
+/* Sliding highlight for every pill control */
+
+.period {
+  position: relative;
+}
+
+.period.has-thumb > label {
+  position: relative;
+  z-index: 1;
+}
+
+.period.has-thumb input:checked + span {
+  background: transparent;
+}
+
+.period span {
+  transition: color 0.2s ease;
+}
+
+.seg-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: 9999px;
+  background: var(--brand);
+  box-shadow: 0 6px 16px -8px rgba(14, 15, 12, 0.5);
+  pointer-events: none;
+}
+
+.period.thumb-ready .seg-thumb {
+  transition:
+    transform 0.38s cubic-bezier(0.3, 1.25, 0.5, 1),
+    width 0.38s cubic-bezier(0.3, 1.25, 0.5, 1),
+    height 0.3s ease;
+}
+
+.hero .seg-thumb {
+  background: var(--hero-text);
+  box-shadow: none;
+}
+
+/* Inputs: a soft focus ring */
+
+.money-input {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.money-input:focus-within {
+  box-shadow:
+    inset 0 0 0 1px var(--brand),
+    0 0 0 4px color-mix(in srgb, var(--brand) 14%, transparent);
+}
+
+/* Bento feature grid */
+
+.feature-grid {
+  gap: 1rem;
+}
+
+.feature {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--canvas);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feature:hover {
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow:
+    0 28px 50px -28px rgba(14, 15, 12, 0.4),
+    0 0 0 1px var(--line);
+}
+
+.feature-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.feature-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 14px;
+  background: var(--panel);
+}
+
+.feature .feature-icon svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.feature-badge {
+  padding: 0.25rem 0.7rem;
+  border-radius: 9999px;
+  background: var(--copper-tint);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.feature h3 {
+  margin: 0.25rem 0 0.3rem;
+}
+
+.feature-open {
+  margin-top: auto;
+  padding-top: 1.1rem;
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.feature-visual {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.fv-row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.fv-row i {
+  display: block;
+  width: var(--w);
+  min-width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 9999px;
+  background: var(--c);
+}
+
+.feature-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+}
+
+.feature-chips span {
+  padding: 0.3rem 0.65rem;
+  border-radius: 9999px;
+  background: var(--panel);
+  color: var(--ink);
+  font: 700 0.8125rem/1.4 ui-monospace, 'Cascadia Mono', Consolas, Menlo, monospace;
+}
+
+/* How it's worked out */
+
+.worked {
+  box-shadow: 0 30px 60px -36px rgba(14, 15, 12, 0.35);
+}
+
+/* FAQ: smooth open and close where supported */
+
+.faq {
+  border-top: 1px solid var(--line);
+}
+
+.faq summary {
+  transition: color 0.15s ease;
+}
+
+.faq summary:hover {
+  color: var(--brand);
+}
+
+.faq summary::after,
+.faq details[open] summary::after {
+  content: '+';
+  transition: transform 0.25s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.faq details[open] summary::after {
+  transform: rotate(45deg);
+  background: var(--brand);
+  color: var(--canvas);
+}
+
+.faq details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.3s ease,
+    content-visibility 0.3s allow-discrete;
+}
+
+.faq details[open]::details-content {
+  block-size: auto;
+}
+
+/* Developer section code window */
+
+.code-window {
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.32);
+  box-shadow:
+    inset 0 0 0 1px var(--hero-line),
+    0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+
+.code-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--hero-line);
+  color: var(--hero-muted);
+  font: 0.75rem ui-monospace, 'Cascadia Mono', Consolas, Menlo, monospace;
+}
+
+.code-bar i {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: #ff5f57;
+}
+
+.code-bar i:nth-child(2) {
+  background: #febc2e;
+}
+
+.code-bar i:nth-child(3) {
+  background: #28c840;
+}
+
+.code-bar span {
+  margin-left: 0.5rem;
+}
+
+.code-window .code {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Scroll fade-ins (translate, so hover transforms keep working) */
+
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  translate: 0 18px;
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  translate: none;
+}
+
+/* Layout at larger sizes */
+
+@media (min-width: 640px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 820px) {
+  .landing-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    padding-bottom: 3rem;
+  }
+
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: 4rem;
+  }
+
+  .stat {
+    padding: 1.4rem 1.5rem;
+  }
+
+  .stat dd {
+    font-size: 2rem;
+  }
+
+  .quick-card {
+    padding: 1.5rem;
+  }
+
+  .worked {
+    position: sticky;
+    top: 5.5rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .feature-wide {
+    grid-column: span 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+
+  .period.thumb-ready .seg-thumb,
+  .faq details::details-content,
+  .feature,
+  .quick-more span,
+  .feature-open span {
+    transition: none;
+  }
+}
+
+/* The PAYE breakdown line under the worked example stays quiet */
+.rows .row.row-detail dd {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+/* ==========================================================================
+   UX: gross-pay hint, share row and the phone result bar
+   ========================================================================== */
+
+.pay-entry .entry-hint {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.share {
+  gap: 0.5rem 1.25rem;
+}
+
+/* Pinned result for phones */
+
+.mini-result {
+  position: fixed;
+  right: 0.75rem;
+  bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  left: 0.75rem;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.75rem 0.7rem 1.25rem;
+  border: 0;
+  border-radius: 20px;
+  background: var(--hero-bg);
+  color: var(--hero-text);
+  font: inherit;
+  text-align: left;
+  box-shadow:
+    0 18px 40px -12px rgba(11, 18, 32, 0.55),
+    inset 0 0 0 1px var(--hero-line);
+  cursor: pointer;
+  visibility: hidden;
+  transform: translateY(calc(100% + 1.5rem));
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s linear 0.3s;
+}
+
+.mini-result.show {
+  visibility: visible;
+  transform: none;
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s;
+}
+
+.mini-result:focus-visible {
+  outline: 3px solid var(--copper);
+  outline-offset: 2px;
+}
+
+.mini-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mini-label {
+  color: var(--hero-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.mini-result strong {
+  color: var(--copper);
+  font-size: 1.375rem;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.mini-sub {
+  color: var(--hero-muted);
+  font-size: 0.8125rem;
+}
+
+.mini-go {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--hero-line);
+  font-weight: 800;
+}
+
+@media (min-width: 820px) {
+  .mini-result {
+    display: none;
+  }
+}
+
+@media print {
+  .mini-result {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-result,
+  .mini-result.show {
+    transition: none;
+  }
+}
+
+/* Long amounts shrink to stay on one line (--fit is set from the figure length) */
+.net {
+  font-size: calc(clamp(2.5rem, 13vw, 3.4rem) * var(--fit, 1));
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.quick-net {
+  font-size: calc(clamp(2.4rem, 11vw, 3.25rem) * var(--fit, 1));
+  white-space: nowrap;
+}
+
+@media (min-width: 960px) {
+  .net {
+    font-size: calc(4rem * var(--fit, 1));
+  }
+}
+
+/* ==========================================================================
+   Responsive fixes from an audit at 14 screen sizes
+   ========================================================================== */
+
+/* Names and links never wrap mid-label in the top bar */
+.brand,
+.topnav a {
+  white-space: nowrap;
+}
+
+/* Comfortable touch targets: at least 40px */
+.brand {
+  min-height: 2.75rem;
+}
+
+.period span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+.language select,
+.nav-cta {
+  min-height: 2.5rem;
+}
+
+/* Tablets and small laptops: the section links only fit from 1080px */
+@media (min-width: 820px) and (max-width: 1079px) {
+  .topnav {
+    display: none;
+  }
+}
+
+/* The hero stays one column until there's room for two */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .quick-card {
+    width: 100%;
+    max-width: 30rem;
+  }
+}
+
+@media (min-width: 820px) and (max-width: 1023px) {
+  .landing-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+    padding-top: 3.5rem;
+  }
+
+  .landing-hero h1 {
+    font-size: clamp(3rem, 8vw, 4.5rem);
+  }
+}
+
+/* Phones turned sideways: little height, so nothing sticks and the hero is compact */
+@media (max-height: 520px) and (orientation: landscape) {
+  .topbar {
+    position: static;
+  }
+
+  .landing-grid {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .landing-hero h1 {
+    font-size: clamp(2rem, 6.5vw, 3.25rem);
+  }
+
+  .badge-pill {
+    margin-bottom: 0.75rem;
+  }
+
+  .lede {
+    margin: 0.75rem 0 1.25rem;
+  }
+
+  .proof {
+    margin-top: 1.25rem;
+  }
+
+  .mini-result {
+    right: auto;
+    width: min(24rem, calc(100% - 1.5rem));
   }
 }

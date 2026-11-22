@@ -47,7 +47,7 @@ describe('shareable URLs', () => {
       mode: 'compare',
       lang: 'ny',
       payEntry: 'split',
-      basic: '12,500',
+      basic: '12500',
       allowances: '2000',
       period: 'annual',
       showEmployer: true,
@@ -55,7 +55,7 @@ describe('shareable URLs', () => {
       targetAllowances: '500',
       offers: [
         { basic: '9000', allowances: '1000' },
-        { basic: '11,000', allowances: '' },
+        { basic: '11000', allowances: '' },
         { basic: '', allowances: '' },
       ],
       fxAmount: '250',
@@ -63,6 +63,10 @@ describe('shareable URLs', () => {
       fxDirection: 'to-kwacha',
     };
     expect(readQuery(writeQuery(state))).toEqual(state);
+  });
+
+  it('writes amounts without thousands separators', () => {
+    expect(writeQuery({ ...defaults, basic: '1,250,000.50' })).toBe('?gross=1250000.50');
   });
 
   it('round-trips a gross state', () => {
